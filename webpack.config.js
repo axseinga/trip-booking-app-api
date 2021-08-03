@@ -1,62 +1,62 @@
-const path = require('path');
+const path = require("path");
 // importuję bibliotękę [path] z [node.js]
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 // importuję odpowiedni plugin
 module.exports = {
     entry: {
-        client: './src/js/client.js',
-        admin: './src/js/admin.js'
+        client: ["whatwg-fetch", "./src/js/client.js"],
+        admin: ["whatwg-fetch", "./src/js/admin.js"],
     },
     // definiuje pliki wejściowe
     // posiadające swoje identyfikatory [chunks]
     output: {
-        path: path.resolve(__dirname, 'build'),
+        path: path.resolve(__dirname, "build"),
         // definiuje ścieżką wyjściową
-        filename: '[name].min.js',
+        filename: "[name].min.js",
         // definiuję nazwę pliku wyjściowego
     },
-    devtool: 'inline-source-map',
+    devtool: "inline-source-map",
     module: {
         rules: [
             {
                 test: /\.js$/,
-                // określam jakie pliki 
+                // określam jakie pliki
                 // będą brane pod uwagę
                 exclude: /node_modules/,
                 // określam wykluczenia
-                use: 'babel-loader',
+                use: "babel-loader",
                 // określam jaki [loader]
                 // ma być wykorzystany
             },
             {
                 test: /\.css$/,
-                // określam jakie pliki 
+                // określam jakie pliki
                 // będą brane pod uwagę
                 exclude: /node_modules/,
                 // określam wykluczenia
-                use: ['style-loader', 'css-loader'],
+                use: ["style-loader", "css-loader"],
                 // określam jaki [loader]
                 // ma być wykorzystany
-            }
-        ]
+            },
+        ],
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/index.html',
+            template: "./src/index.html",
             // wskazuje plik źródłowy
-            filename: 'index.html',
+            filename: "index.html",
             // określan nazwę dla pliku
-            chunks: ['client'],
+            chunks: ["client"],
             // wskazuje plik do podpięcia
         }),
         new HtmlWebpackPlugin({
-            template: './src/admin.html',
+            template: "./src/admin.html",
             // wskazuje plik źródłowy
-            filename: 'admin.html',
+            filename: "admin.html",
             // określan nazwę dla pliku
-            chunks: ['admin'],
+            chunks: ["admin"],
             // wskazuje plik do podpięcia
-        })
-    ]
-}
+        }),
+    ],
+};
 // eksportuję ustawienia dla webpack-a

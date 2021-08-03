@@ -1,4 +1,23 @@
 {
-    "excursions": [],
-    "orders": []
+  "excursions": [
+    {
+      "name": "wycieczka",
+      "about": "blablabla",
+      "price": "100PLN",
+      "id": 5
+    },
+    {
+      "name": "wycieczka",
+      "about": "blablabla",
+      "price": "100PLN",
+      "id": 6
+    },
+    {
+      "name": "wycieczka",
+      "about": "blablabla",
+      "price": "100PLN",
+      "id": 7
+    }
+  ],
+  "orders": []
 }
