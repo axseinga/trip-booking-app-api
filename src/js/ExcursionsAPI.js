@@ -1,4 +1,5 @@
 import "regenerator-runtime";
+import "whatwg-fetch";
 
 class ExcursionsAPI {
     // get objects
@@ -11,7 +12,11 @@ class ExcursionsAPI {
             }
             return Promise.reject(resp);
         })
-            .then((ip) => console.log(ip))
+            .then((ip) => {
+                console.log(ip);
+                const excursions = ip;
+                return excursions;
+            })
             .catch((err) => console.error(err))
             .finally(() => console.log("Finished"));
     }
@@ -44,7 +49,7 @@ class ExcursionsAPI {
             method: "DELETE",
         };
 
-        const API = fetch(`${APIurl}${id}`, options);
+        const API = fetch(`${APIurl}/${id}`, options);
 
         return API.then((resp) => {
             if (resp.ok) {

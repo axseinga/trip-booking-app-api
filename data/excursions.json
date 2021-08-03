@@ -1,22 +1,25 @@
 {
   "excursions": [
     {
-      "name": "wycieczka",
-      "about": "blablabla",
-      "price": "100PLN",
-      "id": 5
+      "title": "Ogrodzieniec",
+      "description": "Lorem ipsum ipsum ipsum",
+      "adultPrice": 100,
+      "childPrice": 70,
+      "id": 1
     },
     {
-      "name": "wycieczka",
-      "about": "blablabla",
-      "price": "100PLN",
-      "id": 6
+      "title": "Ogrod",
+      "description": "Lorem ipsum ipsum ipsum",
+      "adultPrice": 30,
+      "childPrice": 10,
+      "id": 2
     },
     {
-      "name": "wycieczka",
-      "about": "blablabla",
-      "price": "100PLN",
-      "id": 7
+      "title": "zoo",
+      "description": "Lorem ipsum ipsum ipsum",
+      "adultPrice": 60,
+      "childPrice": 30,
+      "id": 3
     }
   ],
   "orders": []

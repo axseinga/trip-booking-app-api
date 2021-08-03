@@ -1,6 +1,7 @@
 import "./../css/admin.css";
 
 import "regenerator-runtime";
+import "whatwg-fetch";
 
 import ExcursionsAPI from "./ExcursionsAPI";
 
@@ -8,27 +9,70 @@ import ExcursionsAPI from "./ExcursionsAPI";
 
 console.log("admin");
 
+const tripExample1 = {
+    title: "Ogrodzieniec",
+    description: "Lorem ipsum ipsum ipsum",
+    adultPrice: 100,
+    childPrice: 70,
+};
+
+const tripExample2 = {
+    title: "Ogrod",
+    description: "Lorem ipsum ipsum ipsum",
+    adultPrice: 30,
+    childPrice: 10,
+};
+
+const tripExample3 = {
+    title: "zoo",
+    description: "Lorem ipsum ipsum ipsum",
+    adultPrice: 60,
+    childPrice: 30,
+};
+
 init();
 
-function init() {
+async function init() {
     // load excursion view for admin
     const manageAPI = new ExcursionsAPI();
     const APIurl = "http://localhost:3000/excursions";
     try {
-        const excursions = manageAPI.getAPI(APIurl);
+        const excursions = await manageAPI.getAPI(APIurl);
         console.log(excursions);
+        const markups = createTrips(excursions);
+        loadTrips(markups);
     } catch (error) {
         console.log(error);
     }
 }
 
-function loadAdminView() {}
-
-function createTrip() {
-    excursions.forEach((excursion) => {});
+function loadTrips(markups) {
+    const excursionsPanel = document.querySelector(".panel__excursions");
+    markups.forEach((markup) =>
+        excursionsPanel.insertAdjacentHTML("afterbegin", markup)
+    );
 }
 
-function createTripMarkup(title, description, adultPrice, childPrice) {
+function createTrips(excursions) {
+    let markups = [];
+    excursions.forEach((excursion) => {
+        const title = excursion.title;
+        const description = excursion.description;
+        const adultPrice = excursion.adultPrice;
+        const childPrice = excursion.childPrice;
+        const data = [title, description, adultPrice, childPrice];
+        const markup = createTripsMarkup(
+            title,
+            description,
+            adultPrice,
+            childPrice
+        );
+        markups.push(markup);
+    });
+    return markups;
+}
+
+function createTripsMarkup(title, description, adultPrice, childPrice) {
     return `
         <li data-id="1" class="excursions__item     excursions__item--prototype">
         <header class="excursions__header">
