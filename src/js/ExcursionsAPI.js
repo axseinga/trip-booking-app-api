@@ -1,10 +1,9 @@
-import "whatwg-fetch";
+import "regenerator-runtime";
 
 class ExcursionsAPI {
     // get objects
-
-    getAPI() {
-        const API = fetch("http://localhost:3000/excursions");
+    getAPI(APIurl) {
+        const API = fetch(APIurl);
 
         return API.then((resp) => {
             if (resp.ok) {
@@ -16,16 +15,16 @@ class ExcursionsAPI {
             .catch((err) => console.error(err))
             .finally(() => console.log("Finished"));
     }
-    // add object
 
-    addToAPI(trip) {
+    // add object
+    addToAPI(APIurl, trip) {
         const options = {
             method: "POST",
             body: JSON.stringify(trip),
             headers: { "Content-Type": "application/json" },
         };
 
-        const API = fetch(`http://localhost:3000/excursions/`, options);
+        const API = fetch(APIurl, options);
 
         return API.then((resp) => {
             if (resp.ok) {
@@ -37,18 +36,15 @@ class ExcursionsAPI {
             .catch((err) => console.error(err))
             .finally(() => console.log("Finished"));
     }
-    // delete object
 
-    deleteFromAPI(id) {
+    // delete object
+    deleteFromAPI(APIurl, id) {
         // takes string as argument
         const options = {
             method: "DELETE",
         };
 
-        const API = fetch(
-            `http://localhost:3000/excursions/${id}`,
-            options
-        );
+        const API = fetch(`${APIurl}${id}`, options);
 
         return API.then((resp) => {
             if (resp.ok) {

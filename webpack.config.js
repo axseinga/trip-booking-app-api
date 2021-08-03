@@ -4,8 +4,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 // importuję odpowiedni plugin
 module.exports = {
     entry: {
-        client: ["whatwg-fetch", "./src/js/client.js"],
-        admin: ["whatwg-fetch", "./src/js/admin.js"],
+        client: ["regenerator-runtime/runtime.js", "./src/js/client.js"],
+        admin: ["regenerator-runtime/runtime.js", "./src/js/admin.js"],
     },
     // definiuje pliki wejściowe
     // posiadające swoje identyfikatory [chunks]
