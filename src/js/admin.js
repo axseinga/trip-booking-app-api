@@ -30,6 +30,7 @@ async function init() {
     addBtn.addEventListener("click", function (e) {
         e.preventDefault();
         addTrip(APIurl, manageAPI);
+        clearInputs();
     });
 
     // delete trips from the panel //
@@ -233,4 +234,15 @@ function createTripsMarkup(id, title, description, adultPrice, childPrice) {
         </form>
     </li>
       `;
+}
+
+function clearInputs() {
+    const title = document.querySelector(".form__field");
+    title.value = "";
+    const description = document.querySelector(".form__field--longtext");
+    description.value = "";
+    const adultPrice = document.querySelector("input[name=adult]");
+    adultPrice.value = "";
+    const childPrice = document.querySelector("input[name=child]");
+    childPrice.value = "";
 }
