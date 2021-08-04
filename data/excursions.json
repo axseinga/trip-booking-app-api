@@ -1,18 +1,18 @@
 {
   "excursions": [
     {
-      "title": "Pompeje",
-      "description": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum\"",
-      "adultPrice": "200",
-      "childPrice": "100",
-      "id": 25
-    },
-    {
-      "title": "Idaho",
+      "title": "Kilimiri",
       "description": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum\"",
       "adultPrice": "500",
       "childPrice": "100",
-      "id": 26
+      "id": 40
+    },
+    {
+      "title": "Polska",
+      "description": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum\"",
+      "adultPrice": "200",
+      "childPrice": "100",
+      "id": 41
     }
   ],
   "orders": []

@@ -151,19 +151,22 @@ async function addTrip(APIurl, manageAPI) {
         let tripDataWithId;
         try {
             tripDataWithId = await manageAPI.getAPI(APIurl);
+            // filter for trip with matching id
+            console.log(tripDataWithId);
+            console.log(title);
+            const matchedTrip = tripDataWithId.filter((trip) => {
+                return trip.title === title;
+            });
+            // create element with matching id
+            console.log(matchedTrip);
+            const markup = createTrip(matchedTrip[0]);
+            const excursionsPanel =
+                document.querySelector(".panel__excursions");
+            excursionsPanel.insertAdjacentHTML("afterbegin", markup);
+            clearInputs();
         } catch (err) {
             console.log(err);
         }
-        // filter for trip with matching id
-        const matchedTrip = tripDataWithId.filter((trip) => {
-            return trip.title === title;
-        });
-        // create element with matching id
-        console.log(matchedTrip);
-        const markup = createTrip(matchedTrip[0]);
-        const excursionsPanel = document.querySelector(".panel__excursions");
-        excursionsPanel.insertAdjacentHTML("afterbegin", markup);
-        clearInputs();
     } else {
         console.log("tripData doesnt exist");
     }
