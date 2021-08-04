@@ -23,13 +23,11 @@ async function init() {
         console.log(error);
     }
     // add new trip to the panel //
-    /* enable adding empty trips! */
 
     const addBtn = document.querySelector(".order__field-submit");
     addBtn.addEventListener("click", function (e) {
         e.preventDefault();
         addTrip(APIurl, manageAPI);
-        clearInputs();
     });
 
     // delete trips from the panel //
@@ -131,24 +129,29 @@ function deleteTrip(btn, manageAPI, APIurl) {
 
 async function addTrip(APIurl, manageAPI) {
     const tripData = getTripData();
-    const title = tripData.title;
-    // add trip to data.json
-    manageAPI.addToAPI(APIurl, tripData);
-    // get data from data.json
-    let tripDataWithId;
-    try {
-        tripDataWithId = await manageAPI.getAPI(APIurl);
-    } catch (err) {
-        console.log(err);
+    if (tripData) {
+        const title = tripData.title;
+        // add trip to data.json
+        manageAPI.addToAPI(APIurl, tripData);
+        // get data from data.json
+        let tripDataWithId;
+        try {
+            tripDataWithId = await manageAPI.getAPI(APIurl);
+        } catch (err) {
+            console.log(err);
+        }
+        // filter for trip with matching id
+        const matchedTrip = tripDataWithId.filter((trip) => {
+            return trip.title === title;
+        });
+        // create element with matching id
+        const markup = createTrip(matchedTrip[0]);
+        const excursionsPanel = document.querySelector(".panel__excursions");
+        excursionsPanel.insertAdjacentHTML("afterbegin", markup);
+        clearInputs();
+    } else {
+        console.log("tripData doesnt exist");
     }
-    // filter for trip with matching id
-    const matchedTrip = tripDataWithId.filter((trip) => {
-        return trip.title === title;
-    });
-    // create element with matching id
-    const markup = createTrip(matchedTrip[0]);
-    const excursionsPanel = document.querySelector(".panel__excursions");
-    excursionsPanel.insertAdjacentHTML("afterbegin", markup);
 }
 
 function createTrip(tripData) {
@@ -168,16 +171,34 @@ function createTrip(tripData) {
 }
 
 function getTripData() {
-    const title = document.querySelector(".form__field").value;
-    const description = document.querySelector(".form__field--longtext").value;
-    const adultPrice = document.querySelector("input[name=adult]").value;
-    const childPrice = document.querySelector("input[name=child]").value;
-    return {
-        title: title,
-        description: description,
-        adultPrice: adultPrice,
-        childPrice: childPrice,
-    };
+    const titleEl = document.querySelector(".form__field");
+    const title = titleEl.value;
+    const descriptionEl = document.querySelector(".form__field--longtext");
+    const description = descriptionEl.value;
+    const adultPriceEl = document.querySelector("input[name=adult]");
+    const adultPrice = adultPriceEl.value;
+    const childPriceEl = document.querySelector("input[name=child]");
+    const childPrice = childPriceEl.value;
+
+    if (
+        title !== "" &&
+        description !== "" &&
+        adultPrice !== "" &&
+        childPrice !== ""
+    ) {
+        return {
+            title: title,
+            description: description,
+            adultPrice: adultPrice,
+            childPrice: childPrice,
+        };
+    } else {
+        console.log("All tabs must contain data");
+        titleEl.placeholder = "Wpisz nazwe";
+        descriptionEl.placeholder = "Uzupelnij opis";
+        adultPriceEl.placeholder = "Dodaj cene";
+        childPriceEl.placeholder = "Dodaj cene";
+    }
 }
 
 // Create and load trips from excursions.json //
@@ -245,6 +266,8 @@ function createTripsMarkup(id, title, description, adultPrice, childPrice) {
     </li>
       `;
 }
+
+// Clears //
 
 function clearInputs() {
     const title = document.querySelector(".form__field");
