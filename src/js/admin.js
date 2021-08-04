@@ -5,32 +5,9 @@ import "whatwg-fetch";
 
 import ExcursionsAPI from "./ExcursionsAPI";
 
-//document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", init);
 
 console.log("admin");
-
-const tripExample1 = {
-    title: "Ogrodzieniec",
-    description: "Lorem ipsum ipsum ipsum",
-    adultPrice: 100,
-    childPrice: 70,
-};
-
-const tripExample2 = {
-    title: "Ogrod",
-    description: "Lorem ipsum ipsum ipsum",
-    adultPrice: 30,
-    childPrice: 10,
-};
-
-const tripExample3 = {
-    title: "zoo",
-    description: "Lorem ipsum ipsum ipsum",
-    adultPrice: 60,
-    childPrice: 30,
-};
-
-init();
 
 async function init() {
     // load excursion view for admin
@@ -44,13 +21,61 @@ async function init() {
     } catch (error) {
         console.log(error);
     }
+    // add new trip to the panel //
+    const addBtn = document.querySelector(".order__field-submit");
+    addBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        addTrip(APIurl, manageAPI);
+    });
+    // delete trips from the panel //
 }
+
+// Add new trip to the admin panel //
+
+function addTrip(APIurl, manageAPI) {
+    const tripData = getTripData();
+    manageAPI.addToAPI(APIurl, tripData);
+    const markup = createTrip(tripData);
+    const excursionsPanel = document.querySelector(".panel__excursions");
+    excursionsPanel.insertAdjacentHTML("afterbegin", markup);
+}
+
+function createTrip(tripData) {
+    const title = tripData.title;
+    const description = tripData.description;
+    const adultPrice = tripData.adultPrice;
+    const childPrice = tripData.childPrice;
+    const markup = createTripsMarkup(
+        title,
+        description,
+        adultPrice,
+        childPrice
+    );
+    return markup;
+}
+
+function getTripData() {
+    const title = document.querySelector(".form__field").value;
+    const description = document.querySelector(".form__field--longtext").value;
+    const adultPrice = document.querySelector("input[name=adult]").value;
+    const childPrice = document.querySelector("input[name=child]").value;
+    return {
+        title: title,
+        description: description,
+        adultPrice: adultPrice,
+        childPrice: childPrice,
+    };
+}
+
+// Create and load trips from excursions.json //
 
 function loadTrips(markups) {
     const excursionsPanel = document.querySelector(".panel__excursions");
-    markups.forEach((markup) =>
-        excursionsPanel.insertAdjacentHTML("afterbegin", markup)
-    );
+    if (Array.isArray(markups)) {
+        markups.forEach((markup) =>
+            excursionsPanel.insertAdjacentHTML("afterbegin", markup)
+        );
+    } else return;
 }
 
 function createTrips(excursions) {
@@ -60,7 +85,7 @@ function createTrips(excursions) {
         const description = excursion.description;
         const adultPrice = excursion.adultPrice;
         const childPrice = excursion.childPrice;
-        const data = [title, description, adultPrice, childPrice];
+        const data = [title, description, adultPrice, childPrice]; // ?
         const markup = createTripsMarkup(
             title,
             description,
@@ -74,7 +99,7 @@ function createTrips(excursions) {
 
 function createTripsMarkup(title, description, adultPrice, childPrice) {
     return `
-        <li data-id="1" class="excursions__item     excursions__item--prototype">
+        <li data-id="1" class="excursions__item">
         <header class="excursions__header">
             <h2 class="excursions__title">${title}</h2>
             <p class="excursions__description">${description}</p>
