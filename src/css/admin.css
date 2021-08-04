@@ -4,6 +4,25 @@
     box-sizing: border-box;
 }
 
+body {
+    height: 100vh;
+    background-image: linear-gradient(
+            to right bottom,
+            rgba(143, 193, 227, 0.6),
+            rgba(143, 193, 227, 0.6)
+        ),
+        url(../img/image.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* Photo by v2osk: "https://unsplash.com/@v2osk?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"  */
+    font-family: "Roboto", sans-serif;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 30px;
+}
+
 ul {
     list-style: none;
 }
@@ -12,10 +31,14 @@ ul {
     display: flex;
     margin: 0 auto;
     max-width: 1200px;
+    max-height: 100vh;
     padding: 30px 0;
+    align-items: flex-start;
+    overflow: scroll;
+    justify-content: space-between;
 }
 
-.panel__excursins {
+.panel__excursions {
     width: 70%;
 }
 
@@ -27,13 +50,19 @@ ul {
 .excursions__item {
     border: 1px solid #bbb;
     border-radius: 5px;
-    margin: 10px;
+    margin: 5px 10px;
     padding: 20px;
-    width: calc(50% - 20px);
+    width: 400px;
+    max-height: max-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    background-color: rgba(247, 249, 251, 0.5);
+    box-shadow: 2px 11px 15px 7px rgba(0, 0, 0, 0.11);
 }
 
 .excursions__item--active {
-    border: 1px solid red;
     pointer-events: none;
 }
 
@@ -42,10 +71,51 @@ ul {
     opacity: 0.3;
 }
 
+.excursions__description {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.excursions__form {
+    background-color: rgba(247, 249, 251, 0.4);
+    padding: 10px;
+    border: 1px solid rgba(247, 249, 251, 0.5);
+}
+
+.excursions__field {
+    padding: 5px;
+}
+
+.excursions__field-input,
+.order__field-submit {
+    height: 30px;
+    width: 100px;
+    margin: 5px 0;
+    border-radius: 8px;
+    background-color: rgba(143, 193, 227, 1);
+}
+
+.excursions__field-input:active,
+.order__field-submit:active,
+.excursions__field-input:hover,
+.order__field-submit:hover {
+    background-color: rgb(55, 185, 194);
+}
+
 .panel__form {
-    background-color: #f4f4f4;
+    margin: 0 30px;
+    width: 200px;
     padding: 20px;
-    width: 30%;
+    height: 60vh;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    background-color: rgba(247, 249, 251, 0.7);
+    box-shadow: 2px 11px 15px 7px rgba(0, 0, 0, 0.11);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
 }
 
 .uploader,
@@ -57,8 +127,19 @@ ul {
 
 .form__field {
     display: block;
+    width: 100%;
+    margin: 5px 0;
+    background-color: rgba(247, 249, 251, 0.7);
+    border: 1px solid grey;
+}
+
+.order__field {
+    margin: 20px 0;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .form__field--longtext {
-    height: 100px;
+    height: 200px;
 }

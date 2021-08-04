@@ -38,6 +38,15 @@ module.exports = {
                 // określam jaki [loader]
                 // ma być wykorzystany
             },
+            {
+                test: /\.(jpg|png|svg)$/,
+                use: {
+                    loader: "url-loader",
+                    options: {
+                        limit: 25000,
+                    },
+                },
+            },
         ],
     },
     plugins: [

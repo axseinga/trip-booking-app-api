@@ -261,12 +261,12 @@ function createTripsMarkup(id, title, description, adultPrice, childPrice) {
         <form class="excursions__form">
             <div class="excursions__field">
                 <label class="excursions__field-name">
-                    Dorosły: <strong>${adultPrice}</strong>PLN
+                    Dorosły: <strong>${adultPrice} </strong>PLN
                 </label>
             </div>
             <div class="excursions__field">
                 <label class="excursions__field-name">
-                    Dziecko: <strong>${childPrice}</strong>PLN
+                    Dziecko: <strong>${childPrice} </strong>PLN
                 </label>
             </div>
             <div class="excursions__field   excursions__field--submit">

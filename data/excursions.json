@@ -1,18 +1,39 @@
 {
   "excursions": [
     {
+      "title": "Elemele",
+      "description": "opis opis",
+      "adultPrice": "500",
+      "childPrice": "200",
+      "id": 43
+    },
+    {
       "title": "Kilimiri",
       "description": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum\"",
       "adultPrice": "500",
       "childPrice": "100",
-      "id": 40
+      "id": 44
     },
     {
       "title": "Polska",
-      "description": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum\"",
+      "description": "opis opis",
       "adultPrice": "200",
-      "childPrice": "100",
-      "id": 41
+      "childPrice": "50",
+      "id": 45
+    },
+    {
+      "title": "Polska",
+      "description": "opis opis",
+      "adultPrice": "200",
+      "childPrice": "50",
+      "id": 46
+    },
+    {
+      "title": "Ontario",
+      "description": "opis opis",
+      "adultPrice": "500",
+      "childPrice": "400",
+      "id": 47
     }
   ],
   "orders": []
