@@ -1,27 +1,6 @@
 {
   "excursions": [
     {
-      "title": "Ogrodzieniec",
-      "description": "Lorem ipsum ipsum ipsum",
-      "adultPrice": 100,
-      "childPrice": 70,
-      "id": 1
-    },
-    {
-      "title": "Ogrod",
-      "description": "Lorem ipsum ipsum ipsum",
-      "adultPrice": 30,
-      "childPrice": 10,
-      "id": 2
-    },
-    {
-      "title": "zoo",
-      "description": "Lorem ipsum ipsum ipsum",
-      "adultPrice": 60,
-      "childPrice": 30,
-      "id": 3
-    },
-    {
       "title": "Nad morze",
       "description": "dfcss",
       "adultPrice": "20",
@@ -34,20 +13,6 @@
       "adultPrice": "50",
       "childPrice": "3",
       "id": 16
-    },
-    {
-      "title": "nefretete",
-      "description": "svfss",
-      "adultPrice": "20",
-      "childPrice": "1",
-      "id": 17
-    },
-    {
-      "title": "esfcwdw",
-      "description": "efcwd",
-      "adultPrice": "300",
-      "childPrice": "100",
-      "id": 18
     }
   ],
   "orders": []

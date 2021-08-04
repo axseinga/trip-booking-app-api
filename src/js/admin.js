@@ -22,12 +22,36 @@ async function init() {
         console.log(error);
     }
     // add new trip to the panel //
+
+    /* enable adding empty trips! */
+
     const addBtn = document.querySelector(".order__field-submit");
     addBtn.addEventListener("click", function (e) {
         e.preventDefault();
         addTrip(APIurl, manageAPI);
     });
+
     // delete trips from the panel //
+    const deleteBtns = Array.from(
+        document.querySelectorAll(".excursions__field-input--remove")
+    );
+    deleteBtns.forEach((btn) => {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            deleteTrip(btn, manageAPI, APIurl);
+        });
+    });
+}
+
+// Edit any trip from the panel //
+
+// Delete any trip from the panel //
+
+function deleteTrip(btn, manageAPI, APIurl) {
+    const parent = btn.parentElement.parentElement.parentElement;
+    const id = parent.dataset.id;
+    manageAPI.deleteFromAPI(APIurl, id);
+    parent.remove();
 }
 
 // Add new trip to the admin panel //
@@ -81,12 +105,13 @@ function loadTrips(markups) {
 function createTrips(excursions) {
     let markups = [];
     excursions.forEach((excursion) => {
+        const id = excursion.id;
         const title = excursion.title;
         const description = excursion.description;
         const adultPrice = excursion.adultPrice;
         const childPrice = excursion.childPrice;
-        const data = [title, description, adultPrice, childPrice]; // ?
         const markup = createTripsMarkup(
+            id,
             title,
             description,
             adultPrice,
@@ -97,9 +122,9 @@ function createTrips(excursions) {
     return markups;
 }
 
-function createTripsMarkup(title, description, adultPrice, childPrice) {
+function createTripsMarkup(id, title, description, adultPrice, childPrice) {
     return `
-        <li data-id="1" class="excursions__item">
+        <li data-id="${id}" class="excursions__item">
         <header class="excursions__header">
             <h2 class="excursions__title">${title}</h2>
             <p class="excursions__description">${description}</p>
@@ -131,14 +156,3 @@ function createTripsMarkup(title, description, adultPrice, childPrice) {
     </li>
       `;
 }
-
-/*const trip = { name: "wycieczka", about: "blablabla", price: "100PLN" }; */
-
-// 01. create event listener for dodaj
-// 02. get data from form inputs
-// 03. create an element wycieczka
-// 04. add element wycieczka do api excursions
-// 05. load element wycieczka
-
-// 06. edit elements
-// 07. delete elements
