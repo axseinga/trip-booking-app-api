@@ -50,6 +50,8 @@ async function init() {
             e.preventDefault();
             const displayedTrip =
                 e.target.parentElement.parentElement.parentElement;
+            markUpdateTrip(displayedTrip);
+            deactiveAlltrips();
             const trip = findTriptoUpdate(btn, excursions);
             displayTripToUpdate(trip);
             createSaveBtn();
@@ -63,17 +65,29 @@ async function init() {
                 displayedTrip.remove();
                 // get data from inputs
                 addTrip(APIurl, manageAPI);
+                cancelBtn.remove();
+                saveBtn.remove();
+                addBtn.disabled = false;
+                setDefault();
             });
             const cancelBtn = saveBtn.nextElementSibling;
             cancelBtn.addEventListener("click", (e) => {
                 e.preventDefault();
                 clearInputs();
+                cancelBtn.remove();
+                saveBtn.remove();
+                addBtn.disabled = false;
+                setDefault();
             });
         });
     });
 }
 
 // Edit any trip from the admin panel //
+
+function markUpdateTrip(displayedTrip) {
+    displayedTrip.classList.add("excursions__item--active");
+}
 
 function findTriptoUpdate(btn, excursions) {
     // 01. find object with matching id
@@ -102,7 +116,7 @@ function createSaveBtn() {
     const addBtn = document.querySelector(".order__field-submit");
     const saveBtn = addBtn.cloneNode();
     saveBtn.value = "zapisz";
-    addBtn.disabled = true;
+    //addBtn.disabled = true;
     const parentBtns = addBtn.parentElement;
     parentBtns.appendChild(saveBtn);
 }
@@ -111,7 +125,7 @@ function createCancelBtn() {
     const addBtn = document.querySelector(".order__field-submit");
     const cancelBtn = addBtn.cloneNode();
     cancelBtn.value = "anuluj";
-    cancelBtn.disabled = false;
+    addBtn.disabled = true;
     const parentBtns = addBtn.parentElement;
     parentBtns.appendChild(cancelBtn);
 }
@@ -145,6 +159,7 @@ async function addTrip(APIurl, manageAPI) {
             return trip.title === title;
         });
         // create element with matching id
+        console.log(matchedTrip);
         const markup = createTrip(matchedTrip[0]);
         const excursionsPanel = document.querySelector(".panel__excursions");
         excursionsPanel.insertAdjacentHTML("afterbegin", markup);
@@ -214,6 +229,7 @@ function loadTrips(markups) {
 
 function createTrips(excursions) {
     let markups = [];
+    console.log(excursions);
     excursions.forEach((excursion) => {
         const id = excursion.id;
         const title = excursion.title;
@@ -268,6 +284,38 @@ function createTripsMarkup(id, title, description, adultPrice, childPrice) {
 }
 
 // Clears //
+
+function setDefault() {
+    const excursionsPanel = document.querySelector(".panel__excursions");
+    const children = excursionsPanel.children;
+    console.log(children);
+
+    Array.from(children).forEach((child) => {
+        child.classList.remove("excursions__item--not-active");
+        child.classList.remove("excursions__item--active");
+        toggleInputs(child, false);
+    });
+}
+
+function deactiveAlltrips() {
+    const excursionsPanel = document.querySelector(".panel__excursions");
+    const children = excursionsPanel.children;
+
+    Array.from(children).forEach((child) => {
+        if (!child.classList.contains("excursions__item--active")) {
+            child.classList.add("excursions__item--not-active");
+        }
+        toggleInputs(child, true);
+    });
+}
+
+function toggleInputs(input, boolean) {
+    const inputEdit = input.lastElementChild.lastElementChild.firstElementChild;
+    const inputDelete =
+        input.lastElementChild.lastElementChild.lastElementChild;
+    inputEdit.disabled = boolean;
+    inputDelete.disabled = boolean;
+}
 
 function clearInputs() {
     const title = document.querySelector(".form__field");

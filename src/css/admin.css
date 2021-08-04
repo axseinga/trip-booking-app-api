@@ -24,12 +24,22 @@ ul {
     flex-wrap: wrap;
 }
 
-.excurions__item {
+.excursions__item {
     border: 1px solid #bbb;
     border-radius: 5px;
     margin: 10px;
     padding: 20px;
     width: calc(50% - 20px);
+}
+
+.excursions__item--active {
+    border: 1px solid red;
+    pointer-events: none;
+}
+
+.excursions__item--not-active {
+    pointer-events: none;
+    opacity: 0.3;
 }
 
 .panel__form {
@@ -38,7 +48,8 @@ ul {
     width: 30%;
 }
 
-.uploader, .order {
+.uploader,
+.order {
     border-bottom: 1px solid #bbb;
     margin-bottom: 20px;
     padding-bottom: 20px;
