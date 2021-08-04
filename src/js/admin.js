@@ -24,7 +24,6 @@ async function init() {
     }
     // add new trip to the panel //
     /* enable adding empty trips! */
-    /* clear inputs */
 
     const addBtn = document.querySelector(".order__field-submit");
     addBtn.addEventListener("click", function (e) {
@@ -49,16 +48,16 @@ async function init() {
         document.querySelectorAll(".excursions__field-input--update")
     );
     editBtns.forEach((btn) => {
-        btn.addEventListener("click", function (e) {
+        btn.addEventListener("click", (e) => {
             e.preventDefault();
             const displayedTrip =
                 e.target.parentElement.parentElement.parentElement;
-            console.log(displayedTrip);
             const trip = findTriptoUpdate(btn, excursions);
             displayTripToUpdate(trip);
             createSaveBtn();
+            createCancelBtn();
             const saveBtn = addBtn.nextElementSibling;
-            saveBtn.addEventListener("click", function (e) {
+            saveBtn.addEventListener("click", (e) => {
                 e.preventDefault();
                 // remove updated trip from data.json and display
                 const id = trip[0].id;
@@ -67,14 +66,16 @@ async function init() {
                 // get data from inputs
                 addTrip(APIurl, manageAPI);
             });
+            const cancelBtn = saveBtn.nextElementSibling;
+            cancelBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                clearInputs();
+            });
         });
     });
 }
 
-// Edit any trip from the panel //
-
-// 03. po kliknieciu zapisz obiekt z inputu zastepuje obiekt ktory mial byc zedytowant
-// 04. API usuwa obiekt i dodaje nowy.
+// Edit any trip from the admin panel //
 
 function findTriptoUpdate(btn, excursions) {
     // 01. find object with matching id
@@ -106,6 +107,15 @@ function createSaveBtn() {
     addBtn.disabled = true;
     const parentBtns = addBtn.parentElement;
     parentBtns.appendChild(saveBtn);
+}
+
+function createCancelBtn() {
+    const addBtn = document.querySelector(".order__field-submit");
+    const cancelBtn = addBtn.cloneNode();
+    cancelBtn.value = "anuluj";
+    cancelBtn.disabled = false;
+    const parentBtns = addBtn.parentElement;
+    parentBtns.appendChild(cancelBtn);
 }
 
 // Delete any trip from the panel //
