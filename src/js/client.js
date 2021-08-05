@@ -26,26 +26,48 @@ async function init() {
         const trip = e.target.parentElement;
         addTripToBasket(trip, manageAPI);
     });
+
+    // listen for deleting trips from basket
+    const panelSummary = document.querySelector(".panel__form");
+    panelSummary.addEventListener("click", function (e) {
+        e.preventDefault();
+        const btn = e.target;
+        if (btn.tagName === "A") {
+            console.log(btn);
+        }
+    });
+
+    const orderBtn = document.querySelector(".order__field-submit");
+    console.log(orderBtn);
+    orderBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        console.log("clicked");
+    });
 }
 
-// Display basket //
+function displayTotalPrice() {}
 
-function createItemMarkup(trip) {
-    return `
-    <li class="summary__item">
-              <h3 class="summary__title">
-                <span class="summary__name">${trip.title}</span>
-                <strong class="summary__total-price">${trip.total}PLN</strong>
-                <a href="#" class="summary__btn-remove" title="usuń">X</a>
-              </h3>
-              <p class="summary__prices">dorośli: ${trip.adultNumber} x ${trip.adultPrice}PLN, dzieci: ${trip.childNumber} x ${trip.childPrice}PLN</p>
-            </li>
-    `;
-}
+// Clear basket - data.json //
+
+/*async function clearBasket(manageAPI) {
+    let basket;
+    const APIurlbasket = "http://localhost:3000/orders";
+    try {
+        basket = await manageAPI.getAPI(APIurlbasket);
+    } catch (error) {
+        console.log(error);
+    }
+    console.log(basket);
+    basket.forEach((item, index) => {
+        console.log(manageAPI);
+        console.log(item);
+        item.manageAPI.deleteFromAPI(APIurlbasket, index);
+    });
+}*/
 
 // add trip to the basket //
 
-function addTripToBasket(trip, manageAPI) {
+async function addTripToBasket(trip, manageAPI) {
     const itemData = getItemData(trip);
     const [title, adult, child] = itemData;
     const item = createItem(title, adult, child);
@@ -53,6 +75,31 @@ function addTripToBasket(trip, manageAPI) {
         const basketAPI = "http://localhost:3000/orders";
         manageAPI.addToAPI(basketAPI, item);
         clearInputs(trip);
+        const itemWithId = await getItemWithId(basketAPI, manageAPI, itemData);
+        const panel = document.querySelector(".panel__summary");
+        const markup = createItemMarkup(itemWithId[0]);
+        panel.insertAdjacentHTML("afterbegin", markup);
+    }
+}
+
+async function getItemWithId(basketAPI, manageAPI, itemData) {
+    let itemsWithId;
+
+    try {
+        itemsWithId = await manageAPI.getAPI(basketAPI);
+        // filter for trip with matching id
+        const matchedItem = itemsWithId.filter((item) => {
+            if (
+                item.title === itemData[0] &&
+                item.adultNumber === +itemData[1][1] &&
+                item.childNumber === +itemData[2][1]
+            ) {
+                return item;
+            }
+        });
+        return matchedItem;
+    } catch (err) {
+        console.log(err);
     }
 }
 
@@ -95,6 +142,22 @@ const getChildData = function (trip) {
     const childQt = childField.lastElementChild.value;
     return [childPrice, childQt];
 };
+
+// Display basket //
+
+function createItemMarkup(trip) {
+    console.log(trip.id);
+    return `
+  <li class="summary__item" data-id="${trip.id}">
+            <h3 class="summary__title">
+              <span class="summary__name">${trip.title}</span>
+              <strong class="summary__total-price">${trip.total}PLN</strong>
+              <a href="#" class="summary__btn-remove" title="usuń">X</a>
+            </h3>
+            <p class="summary__prices">dorośli: ${trip.adultNumber} x ${trip.adultPrice}PLN, <br> dzieci: ${trip.childNumber} x ${trip.childPrice}PLN</p>
+          </li>
+  `;
+}
 
 // load trips to app from data.json //
 

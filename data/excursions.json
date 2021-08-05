@@ -24,34 +24,34 @@
   ],
   "orders": [
     {
-      "title": "Ontario",
-      "adultNumber": 2,
-      "adultPrice": 500,
+      "title": "Ameryka",
+      "adultNumber": 1,
+      "adultPrice": 200,
       "childNumber": 1,
       "childPrice": 100,
-      "total": 1100,
+      "total": 300,
       "id": 1
     },
     {
-      "title": "Islandia",
-      "adultNumber": 2,
-      "adultPrice": 500,
-      "childNumber": 1,
-      "childPrice": 400,
-      "total": 1400,
-      "id": 2
-    },
-    {
-      "title": "Polska",
+      "title": "Ameryka",
       "adultNumber": 2,
       "adultPrice": 200,
       "childNumber": 2,
-      "childPrice": 50,
-      "total": 500,
+      "childPrice": 100,
+      "total": 600,
+      "id": 2
+    },
+    {
+      "title": "Majorka",
+      "adultNumber": 3,
+      "adultPrice": 300,
+      "childNumber": 3,
+      "childPrice": 20,
+      "total": 960,
       "id": 3
     },
     {
-      "title": "Polska",
+      "title": "Finlandia",
       "adultNumber": 2,
       "adultPrice": 200,
       "childNumber": 2,
@@ -60,112 +60,22 @@
       "id": 4
     },
     {
-      "title": "Islandia",
-      "adultNumber": 2,
-      "adultPrice": 500,
-      "childNumber": 1,
-      "childPrice": 400,
-      "total": 1400,
+      "title": "Finlandia",
+      "adultNumber": 4,
+      "adultPrice": 200,
+      "childNumber": 4,
+      "childPrice": 50,
+      "total": 1000,
       "id": 5
     },
     {
-      "title": "Ontario",
+      "title": "Majorka",
       "adultNumber": 2,
-      "adultPrice": 500,
-      "childNumber": 1,
-      "childPrice": 100,
-      "total": 1100,
+      "adultPrice": 300,
+      "childNumber": 12,
+      "childPrice": 20,
+      "total": 840,
       "id": 6
-    },
-    {
-      "title": "Ontario",
-      "adultNumber": 2,
-      "adultPrice": 500,
-      "childNumber": 1,
-      "childPrice": 100,
-      "total": 1100,
-      "id": 7
-    },
-    {
-      "title": "Ontario",
-      "adultNumber": 3,
-      "adultPrice": 500,
-      "childNumber": 1,
-      "childPrice": 100,
-      "total": 1600,
-      "id": 8
-    },
-    {
-      "title": "Ontario",
-      "adultNumber": 2,
-      "adultPrice": 500,
-      "childNumber": 1,
-      "childPrice": 100,
-      "total": 1100,
-      "id": 9
-    },
-    {
-      "title": "Ontario",
-      "adultNumber": 2,
-      "adultPrice": 500,
-      "childNumber": 1,
-      "childPrice": 100,
-      "total": 1100,
-      "id": 10
-    },
-    {
-      "title": "Islandia",
-      "adultNumber": 1,
-      "adultPrice": 500,
-      "childNumber": 1,
-      "childPrice": 400,
-      "total": 900,
-      "id": 11
-    },
-    {
-      "title": "Ontario",
-      "adultNumber": 1,
-      "adultPrice": 500,
-      "childNumber": 1,
-      "childPrice": 100,
-      "total": 600,
-      "id": 12
-    },
-    {
-      "title": "Ontario",
-      "adultNumber": 1,
-      "adultPrice": 500,
-      "childNumber": 2,
-      "childPrice": 100,
-      "total": 700,
-      "id": 13
-    },
-    {
-      "title": "Ontario",
-      "adultNumber": 1,
-      "adultPrice": 500,
-      "childNumber": 1,
-      "childPrice": 100,
-      "total": 600,
-      "id": 14
-    },
-    {
-      "title": "Ontario",
-      "adultNumber": 2,
-      "adultPrice": 500,
-      "childNumber": 1,
-      "childPrice": 100,
-      "total": 1100,
-      "id": 15
-    },
-    {
-      "title": "Islandia",
-      "adultNumber": 1,
-      "adultPrice": 500,
-      "childNumber": 2,
-      "childPrice": 400,
-      "total": 1300,
-      "id": 16
     }
   ]
 }

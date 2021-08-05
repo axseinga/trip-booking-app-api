@@ -87,7 +87,7 @@ ul {
 
 .panel__form {
     margin: 0 30px;
-    width: 200px;
+    width: 250px;
     padding: 20px;
     height: 60vh;
     border: 1px solid #bbb;
@@ -113,6 +113,12 @@ ul {
     background-color: rgba(143, 193, 227, 1);
     margin: 20px 0;
     align-self: center;
+}
+
+.summary__item {
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid rgba(143, 193, 227, 1);
 }
 
 .uploader,
