@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", init);
 
 async function init() {
     let excursions;
+    let totalPrice;
     const manageAPI = new ExcursionsAPI();
     const APIurlExcursions = "http://localhost:3000/excursions";
     try {
@@ -21,22 +22,37 @@ async function init() {
     }
     // listen for adding trip to the basket
     const tripPanel = document.querySelector(".panel__excursions");
-    tripPanel.addEventListener("submit", function (e) {
+    tripPanel.addEventListener("submit", async function (e) {
         e.preventDefault();
         const trip = e.target.parentElement;
         addTripToBasket(trip, manageAPI);
+        try {
+            totalPrice = await calculateTotalPrice(manageAPI);
+            console.log(totalPrice);
+            displayTotalPrice(totalPrice);
+        } catch (err) {
+            console.log(err);
+        }
     });
 
     // listen for deleting trips from basket
     const panelSummary = document.querySelector(".panel__form");
-    panelSummary.addEventListener("click", function (e) {
+    panelSummary.addEventListener("click", async function (e) {
         e.preventDefault();
         const btn = e.target;
         if (btn.tagName === "A") {
-            console.log(btn);
+            deleteItemfromBasket(btn, manageAPI);
+            try {
+                totalPrice = await calculateTotalPrice(manageAPI);
+                console.log(totalPrice);
+                displayTotalPrice(totalPrice);
+            } catch (err) {
+                console.log(err);
+            }
         }
     });
 
+    // listen for adding an order
     const orderBtn = document.querySelector(".order__field-submit");
     console.log(orderBtn);
     orderBtn.addEventListener("click", function (e) {
@@ -45,25 +61,32 @@ async function init() {
     });
 }
 
-function displayTotalPrice() {}
+function displayTotalPrice(totalPrice) {
+    const totalDisplay = document.querySelector(".order__total-price-value");
+    console.log(totalDisplay);
+    totalPrice > 0
+        ? (totalDisplay.innerText = `${totalPrice} PLN`)
+        : (totalDisplay.innerText = "0 PLN");
+}
 
-// Clear basket - data.json //
-
-/*async function clearBasket(manageAPI) {
-    let basket;
-    const APIurlbasket = "http://localhost:3000/orders";
+async function calculateTotalPrice(manageAPI) {
+    let arrWithTotalPrices = [];
+    let items;
+    const basketAPI = "http://localhost:3000/orders";
     try {
-        basket = await manageAPI.getAPI(APIurlbasket);
-    } catch (error) {
-        console.log(error);
+        items = await manageAPI.getAPI(basketAPI);
+        items.forEach((item) => {
+            const total = item.total;
+            console.log(total);
+            arrWithTotalPrices.push(total);
+        });
+        console.log(arrWithTotalPrices);
+        const totalPrice = arrWithTotalPrices.reduce((a, b) => a + b);
+        return totalPrice;
+    } catch (err) {
+        console.log(err);
     }
-    console.log(basket);
-    basket.forEach((item, index) => {
-        console.log(manageAPI);
-        console.log(item);
-        item.manageAPI.deleteFromAPI(APIurlbasket, index);
-    });
-}*/
+}
 
 // add trip to the basket //
 
@@ -146,7 +169,7 @@ const getChildData = function (trip) {
 // Display basket //
 
 function createItemMarkup(trip) {
-    console.log(trip.id);
+    //console.log(trip.id);
     return `
   <li class="summary__item" data-id="${trip.id}">
             <h3 class="summary__title">
@@ -157,6 +180,16 @@ function createItemMarkup(trip) {
             <p class="summary__prices">dorośli: ${trip.adultNumber} x ${trip.adultPrice}PLN, <br> dzieci: ${trip.childNumber} x ${trip.childPrice}PLN</p>
           </li>
   `;
+}
+
+// delete item from basket and from display //
+
+function deleteItemfromBasket(btn, manageAPI) {
+    const item = btn.parentElement.parentElement;
+    const itemId = item.dataset.id;
+    const basketAPI = "http://localhost:3000/orders";
+    manageAPI.deleteFromAPI(basketAPI, itemId);
+    item.remove();
 }
 
 // load trips to app from data.json //
@@ -228,3 +261,21 @@ const clearInputs = function (trip) {
             .firstElementChild.lastElementChild;
     clearInput(childField);
 };
+
+// Clear basket - data.json //
+
+/*async function clearBasket(manageAPI) {
+    let basket;
+    const APIurlbasket = "http://localhost:3000/orders";
+    try {
+        basket = await manageAPI.getAPI(APIurlbasket);
+    } catch (error) {
+        console.log(error);
+    }
+    console.log(basket);
+    basket.forEach((item, index) => {
+        console.log(manageAPI);
+        console.log(item);
+        item.manageAPI.deleteFromAPI(APIurlbasket, index);
+    });
+}*/
