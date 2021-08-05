@@ -30,56 +30,57 @@ async function init() {
         addTrip(APIurl, manageAPI);
     });
 
-    // delete trips from the panel //
-    const deleteBtns = Array.from(
-        document.querySelectorAll(".excursions__field-input--remove")
-    );
-    deleteBtns.forEach((btn) => {
-        btn.addEventListener("click", function (e) {
-            e.preventDefault();
-            deleteTrip(btn, manageAPI, APIurl);
-        });
-    });
+    // edit & delete trips from the panel //
 
-    // edit trips from the panel //
-    const editBtns = Array.from(
-        document.querySelectorAll(".excursions__field-input--update")
-    );
-    editBtns.forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-            e.preventDefault();
-            const displayedTrip =
-                e.target.parentElement.parentElement.parentElement;
-            markUpdateTrip(displayedTrip);
-            deactiveAlltrips();
-            const trip = findTriptoUpdate(btn, excursions);
-            displayTripToUpdate(trip);
-            createSaveBtn();
-            createCancelBtn();
-            const saveBtn = addBtn.nextElementSibling;
-            saveBtn.addEventListener("click", (e) => {
-                e.preventDefault();
-                // remove updated trip from data.json and display
-                const id = trip[0].id;
-                manageAPI.deleteFromAPI(APIurl, id);
-                displayedTrip.remove();
-                // get data from inputs
-                addTrip(APIurl, manageAPI);
-                cancelBtn.remove();
-                saveBtn.remove();
-                addBtn.disabled = false;
-                setDefault();
-            });
-            const cancelBtn = saveBtn.nextElementSibling;
-            cancelBtn.addEventListener("click", (e) => {
-                e.preventDefault();
-                clearInputs();
-                cancelBtn.remove();
-                saveBtn.remove();
-                addBtn.disabled = false;
-                setDefault();
-            });
-        });
+    const excursionsPanel = document.querySelector(".panel__excursions");
+    excursionsPanel.addEventListener("click", function (e) {
+        e.preventDefault();
+        const target = e.target;
+        if (target.tagName === "INPUT") {
+            // edit trip
+            if (target.classList.contains("excursions__field-input--update")) {
+                const displayedTrip =
+                    target.parentElement.parentElement.parentElement;
+                console.log(displayedTrip);
+                markUpdateTrip(displayedTrip);
+                deactiveAlltrips();
+                const trip = findTriptoUpdate(target, excursions);
+                displayTripToUpdate(trip);
+                createSaveBtn();
+                createCancelBtn();
+
+                // save changes
+                const saveBtn = addBtn.nextElementSibling;
+                saveBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const id = trip[0].id;
+                    const updatedTrip = getTripData();
+                    const tripURL = `${APIurl}/${id}`;
+                    manageAPI.updateAPI(tripURL, updatedTrip);
+                    const markup = createTrip(updatedTrip);
+                    displayedTrip.remove();
+                    excursionsPanel.insertAdjacentHTML("afterbegin", markup);
+                    cancelBtn.remove();
+                    saveBtn.remove();
+                    addBtn.disabled = false;
+                    setDefault();
+                    clearInputs();
+                });
+                // cancel changes
+                const cancelBtn = saveBtn.nextElementSibling;
+                cancelBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    clearInputs();
+                    cancelBtn.remove();
+                    saveBtn.remove();
+                    addBtn.disabled = false;
+                    setDefault();
+                });
+            } // delete trip
+            if (target.classList.contains("excursions__field-input--remove")) {
+                deleteTrip(target, manageAPI, APIurl);
+            }
+        }
     });
 }
 
@@ -89,9 +90,9 @@ function markUpdateTrip(displayedTrip) {
     displayedTrip.classList.add("excursions__item--active");
 }
 
-function findTriptoUpdate(btn, excursions) {
+function findTriptoUpdate(target, excursions) {
     // 01. find object with matching id
-    const parent = btn.parentElement.parentElement.parentElement;
+    const parent = target.parentElement.parentElement.parentElement;
     const id = parent.dataset.id;
     const trip = excursions.filter((trip) => {
         return trip.id === +id;
@@ -132,8 +133,8 @@ function createCancelBtn() {
 
 // Delete any trip from the panel //
 
-function deleteTrip(btn, manageAPI, APIurl) {
-    const parent = btn.parentElement.parentElement.parentElement;
+function deleteTrip(target, manageAPI, APIurl) {
+    const parent = target.parentElement.parentElement.parentElement;
     const id = parent.dataset.id;
     manageAPI.deleteFromAPI(APIurl, id);
     parent.remove();

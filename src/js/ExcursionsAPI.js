@@ -42,6 +42,27 @@ class ExcursionsAPI {
             .finally(() => console.log("Finished"));
     }
 
+    // edit object
+    updateAPI(APIurl, trip) {
+        const options = {
+            method: "PUT",
+            body: JSON.stringify(trip),
+            headers: { "Content-Type": "application/json" },
+        };
+
+        const API = fetch(APIurl, options);
+
+        return API.then((resp) => {
+            if (resp.ok) {
+                return resp.json();
+            }
+            return Promise.reject(resp);
+        })
+            .then((ip) => console.log(ip))
+            .catch((err) => console.error(err))
+            .finally(() => console.log("Finished"));
+    }
+
     // delete object
     deleteFromAPI(APIurl, id) {
         // takes string as argument
@@ -61,7 +82,6 @@ class ExcursionsAPI {
             .catch((err) => console.error(err))
             .finally(() => console.log("Finished"));
     }
-    // edit object
 }
 
 export default ExcursionsAPI;
