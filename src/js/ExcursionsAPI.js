@@ -17,8 +17,7 @@ class ExcursionsAPI {
                 const excursions = ip;
                 return excursions;
             })
-            .catch((err) => console.error(err))
-            .finally(() => console.log("Finished"));
+            .catch((err) => console.error(err));
     }
 
     // add object
@@ -38,8 +37,7 @@ class ExcursionsAPI {
             return Promise.reject(resp);
         })
             .then((ip) => console.log(ip))
-            .catch((err) => console.error(err))
-            .finally(() => console.log("Finished"));
+            .catch((err) => console.error(err));
     }
 
     // edit object
@@ -59,8 +57,7 @@ class ExcursionsAPI {
             return Promise.reject(resp);
         })
             .then((ip) => console.log(ip))
-            .catch((err) => console.error(err))
-            .finally(() => console.log("Finished"));
+            .catch((err) => console.error(err));
     }
 
     // delete object
@@ -79,8 +76,7 @@ class ExcursionsAPI {
             return Promise.reject(resp);
         })
             .then((ip) => console.log(ip))
-            .catch((err) => console.error(err))
-            .finally(() => console.log("Finished"));
+            .catch((err) => console.error(err));
     }
 }
 

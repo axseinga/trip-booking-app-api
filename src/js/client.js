@@ -5,8 +5,6 @@ import "whatwg-fetch";
 
 import ExcursionsAPI from "./ExcursionsAPI";
 
-console.log("client");
-
 document.addEventListener("DOMContentLoaded", init);
 
 async function init() {
@@ -18,7 +16,7 @@ async function init() {
         excursions = await manageAPI.getAPI(APIurlExcursions);
         displayTrips(excursions);
     } catch (error) {
-        console.log(error);
+        console.log(`API not loaded: ${error}`);
     }
     // listen for adding trip to the basket
     const tripPanel = document.querySelector(".panel__excursions");
@@ -28,10 +26,9 @@ async function init() {
         addTripToBasket(trip, manageAPI);
         try {
             totalPrice = await calculateTotalPrice(manageAPI);
-            console.log(totalPrice);
             displayTotalPrice(totalPrice);
-        } catch (err) {
-            console.log(err);
+        } catch (error) {
+            console.log(`API not loaded: ${error}`);
         }
     });
 
@@ -44,26 +41,23 @@ async function init() {
             deleteItemfromBasket(btn, manageAPI);
             try {
                 totalPrice = await calculateTotalPrice(manageAPI);
-                console.log(totalPrice);
                 displayTotalPrice(totalPrice);
-            } catch (err) {
-                console.log(err);
+            } catch (error) {
+                console.log(`API not loaded: ${error}`);
             }
         }
     });
 
     // listen for adding an order
     const orderBtn = document.querySelector(".order__field-submit");
-    console.log(orderBtn);
     orderBtn.addEventListener("click", function (e) {
         e.preventDefault();
-        console.log("clicked");
+        orderTrips(e, manageAPI);
     });
 }
 
 function displayTotalPrice(totalPrice) {
     const totalDisplay = document.querySelector(".order__total-price-value");
-    console.log(totalDisplay);
     totalPrice > 0
         ? (totalDisplay.innerText = `${totalPrice} PLN`)
         : (totalDisplay.innerText = "0 PLN");
@@ -77,14 +71,12 @@ async function calculateTotalPrice(manageAPI) {
         items = await manageAPI.getAPI(basketAPI);
         items.forEach((item) => {
             const total = item.total;
-            console.log(total);
             arrWithTotalPrices.push(total);
         });
-        console.log(arrWithTotalPrices);
-        const totalPrice = arrWithTotalPrices.reduce((a, b) => a + b);
+        const totalPrice = arrWithTotalPrices.reduce((a, b) => a + b, 0);
         return totalPrice;
-    } catch (err) {
-        console.log(err);
+    } catch (error) {
+        console.log(`API not loaded: ${error}`);
     }
 }
 
@@ -121,8 +113,8 @@ async function getItemWithId(basketAPI, manageAPI, itemData) {
             }
         });
         return matchedItem;
-    } catch (err) {
-        console.log(err);
+    } catch (error) {
+        console.log(`API not loaded: ${error}`);
     }
 }
 
@@ -169,7 +161,6 @@ const getChildData = function (trip) {
 // Display basket //
 
 function createItemMarkup(trip) {
-    //console.log(trip.id);
     return `
   <li class="summary__item" data-id="${trip.id}">
             <h3 class="summary__title">
@@ -245,6 +236,74 @@ function createTripMarkup(title, description, adultPrice, childPrice) {
       `;
 }
 
+// Sent form & validate data //
+
+function orderTrips(e, manageAPI) {
+    const errors = [];
+    const name = e.target.parentElement.parentElement.elements.name;
+    validateString(name, errors);
+    const email = e.target.parentElement.parentElement.elements.email;
+    validateEmail(email, errors);
+    if (errors.length > 0) {
+        e.preventDefault();
+        console.log("Bledy w formularzu");
+    } else {
+        createOrderedMsg(e, email);
+        // clear inputs
+        clearInput(name);
+        clearInput(email);
+        clearTotal(e);
+        // clear data base
+        clearBasket(manageAPI);
+        // clear display basket
+        clearBasketDisplay();
+    }
+}
+
+function validateString(input, arr) {
+    const regex = /^[a-zA-Z]+ [a-zA-Z]+$/;
+    const value = input.value;
+    const label = input.parentElement;
+    if (!value) {
+        input.placeholder = "Wpisz imie";
+        label.style.color = "red";
+        arr.push("error");
+    } else if (!value.match(regex)) {
+        label.style.color = "red";
+        arr.push("error");
+    } else {
+        label.style.color = "black";
+    }
+}
+
+function validateEmail(input, arr) {
+    const regex =
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const value = input.value;
+    const label = input.parentElement;
+    if (!value) {
+        input.placeholder = "Wpisz email";
+        label.style.color = "red";
+        arr.push("error");
+    } else if (!value.match(regex)) {
+        label.style.color = "red";
+        arr.push("error");
+    } else {
+        label.style.color = "black";
+    }
+}
+
+function createOrderedMsg(e, email) {
+    const target = e.target;
+    const finalPrice =
+        target.parentElement.parentElement.firstElementChild.firstElementChild
+            .innerText;
+    const emailAddres = email.value;
+    alert(
+        `Dziękujęmy za złożenie zamówienia o wartości ${finalPrice}. Wszelkie szczegóły zamówienia zostały wysłane na adres email: ${emailAddres}.`
+    );
+}
+
 // Clears //
 
 const clearInput = function (input) {
@@ -262,20 +321,34 @@ const clearInputs = function (trip) {
     clearInput(childField);
 };
 
+// Clear display basket
+
+function clearBasketDisplay() {
+    const basket = document.querySelector(".panel__summary");
+    basket.innerHTML = "";
+}
+
+// Clear total
+
+function clearTotal(e) {
+    const target = e.target;
+    const totalDisplay =
+        target.parentElement.parentElement.firstElementChild.firstElementChild;
+    totalDisplay.innerText = "0 PLN";
+}
+
 // Clear basket - data.json //
 
-/*async function clearBasket(manageAPI) {
+async function clearBasket(manageAPI) {
     let basket;
     const APIurlbasket = "http://localhost:3000/orders";
     try {
         basket = await manageAPI.getAPI(APIurlbasket);
+        basket.forEach((item, index) => {
+            manageAPI.deleteFromAPI(APIurlbasket, index + 1);
+        });
     } catch (error) {
         console.log(error);
     }
     console.log(basket);
-    basket.forEach((item, index) => {
-        console.log(manageAPI);
-        console.log(item);
-        item.manageAPI.deleteFromAPI(APIurlbasket, index);
-    });
-}*/
+}
