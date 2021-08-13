@@ -1,6 +1,4 @@
-# Frontend Mentor - Tip calculator app solution
-
-devmentor.pl - Javascript: Fetch and API
+# devmentor.pl - Javascript: Fetch and API
 
 ## Table of contents
 
