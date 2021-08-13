@@ -40,12 +40,12 @@ Users should be able to:
 3. Run npm start command to open developers mode.
 4. Run json-server --watch ./data/excursions.json command.
 
-Client panel: http://localhost:8080/index.html
-Admin panel: http://localhost:8080/admin.html
+-   Client panel: http://localhost:8080/index.html
+-   Admin panel: http://localhost:8080/admin.html
 
-Excursions data: http://localost:3000/excursions
-Basket data: http://localost:3000/basket
-Orders data: http://localost:3000/orders
+-   Excursions data: http://localost:3000/excursions
+-   Basket data: http://localost:3000/basket
+-   Orders data: http://localost:3000/orders
 
 ## My process
 
