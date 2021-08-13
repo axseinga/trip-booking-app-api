@@ -22,5 +22,22 @@
       "id": 3
     }
   ],
-  "orders": []
+  "basket": [],
+  "orders": [
+    [
+      {
+        "totalPrice": "460 PLN",
+        "orderEmail": "email@email.io"
+      },
+      {
+        "title": "Hel",
+        "adultNumber": 2,
+        "adultPrice": 150,
+        "childNumber": 2,
+        "childPrice": 80,
+        "total": 460,
+        "id": 1
+      }
+    ]
+  ]
 }

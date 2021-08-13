@@ -12,6 +12,7 @@ async function init() {
     let totalPrice;
     const manageAPI = new ExcursionsAPI();
     const APIurlExcursions = "http://localhost:3000/excursions";
+    clearBasket(manageAPI);
     try {
         excursions = await manageAPI.getAPI(APIurlExcursions);
         displayTrips(excursions);
@@ -66,7 +67,7 @@ function displayTotalPrice(totalPrice) {
 async function calculateTotalPrice(manageAPI) {
     let arrWithTotalPrices = [];
     let items;
-    const basketAPI = "http://localhost:3000/orders";
+    const basketAPI = "http://localhost:3000/basket";
     try {
         items = await manageAPI.getAPI(basketAPI);
         items.forEach((item) => {
@@ -87,7 +88,7 @@ async function addTripToBasket(trip, manageAPI) {
     const [title, adult, child] = itemData;
     const item = createItem(title, adult, child);
     if (adult[1] !== "" && child[1] !== "") {
-        const basketAPI = "http://localhost:3000/orders";
+        const basketAPI = "http://localhost:3000/basket";
         manageAPI.addToAPI(basketAPI, item);
         clearInputs(trip);
         const itemWithId = await getItemWithId(basketAPI, manageAPI, itemData);
@@ -178,7 +179,7 @@ function createItemMarkup(trip) {
 function deleteItemfromBasket(btn, manageAPI) {
     const item = btn.parentElement.parentElement;
     const itemId = item.dataset.id;
-    const basketAPI = "http://localhost:3000/orders";
+    const basketAPI = "http://localhost:3000/basket";
     manageAPI.deleteFromAPI(basketAPI, itemId);
     item.remove();
 }
@@ -248,7 +249,8 @@ function orderTrips(e, manageAPI) {
         e.preventDefault();
         console.log("Bledy w formularzu");
     } else {
-        createOrderedMsg(e, email);
+        const orderData = createOrderedMsg(e, email);
+        addOrderToDatabase(manageAPI, orderData);
         // clear inputs
         clearInput(name);
         clearInput(email);
@@ -257,6 +259,27 @@ function orderTrips(e, manageAPI) {
         clearBasket(manageAPI);
         // clear display basket
         clearBasketDisplay();
+    }
+}
+
+async function addOrderToDatabase(manageAPI, orderData) {
+    let orderArr = [];
+    let items;
+    const [price, email] = orderData;
+    const data = { totalPrice: price, orderEmail: email };
+    orderArr.push(data);
+
+    const basketAPI = "http://localhost:3000/basket";
+    const ordersAPI = "http://localhost:3000/orders";
+    try {
+        items = await manageAPI.getAPI(basketAPI);
+        items.forEach((item) => {
+            orderArr.push(item);
+        });
+        await manageAPI.addToAPI(ordersAPI, orderArr);
+        return;
+    } catch (error) {
+        console.log(`API not loaded: ${error}`);
     }
 }
 
@@ -302,6 +325,7 @@ function createOrderedMsg(e, email) {
     alert(
         `Dziękujęmy za złożenie zamówienia o wartości ${finalPrice}. Wszelkie szczegóły zamówienia zostały wysłane na adres email: ${emailAddres}.`
     );
+    return [finalPrice, emailAddres];
 }
 
 // Clears //
@@ -341,7 +365,7 @@ function clearTotal(e) {
 
 async function clearBasket(manageAPI) {
     let basket;
-    const APIurlbasket = "http://localhost:3000/orders";
+    const APIurlbasket = "http://localhost:3000/basket";
     try {
         basket = await manageAPI.getAPI(APIurlbasket);
         basket.forEach((item, index) => {
