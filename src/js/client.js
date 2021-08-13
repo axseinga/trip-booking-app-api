@@ -60,8 +60,8 @@ async function init() {
 function displayTotalPrice(totalPrice) {
     const totalDisplay = document.querySelector(".order__total-price-value");
     totalPrice > 0
-        ? (totalDisplay.innerText = `${totalPrice} PLN`)
-        : (totalDisplay.innerText = "0 PLN");
+        ? (totalDisplay.innerText = `${totalPrice} GB`)
+        : (totalDisplay.innerText = "0 GB");
 }
 
 async function calculateTotalPrice(manageAPI) {
@@ -166,10 +166,10 @@ function createItemMarkup(trip) {
   <li class="summary__item" data-id="${trip.id}">
             <h3 class="summary__title">
               <span class="summary__name">${trip.title}</span>
-              <strong class="summary__total-price">${trip.total}PLN</strong>
-              <a href="#" class="summary__btn-remove" title="usuń">X</a>
+              <strong class="summary__total-price">${trip.total}GB</strong>
+              <a href="#" class="summary__btn-remove" title="delete">X</a>
             </h3>
-            <p class="summary__prices">dorośli: ${trip.adultNumber} x ${trip.adultPrice}PLN, <br> dzieci: ${trip.childNumber} x ${trip.childPrice}PLN</p>
+            <p class="summary__prices">adults: ${trip.adultNumber} x ${trip.adultPrice}GB, <br> children: ${trip.childNumber} x ${trip.childPrice}GB</p>
           </li>
   `;
 }
@@ -215,20 +215,20 @@ function createTripMarkup(title, description, adultPrice, childPrice) {
             <form class="excursions__form">
               <div class="excursions__field">
                 <label class="excursions__field-name">
-                  Dorosły: <span class="excursions__price">${adultPrice}</span>PLN x
+                  Adult: <span class="excursions__price">${adultPrice}</span>GB x
                   <input class="excursions__field-input" name="adults" />
                 </label>
               </div>
               <div class="excursions__field">
                 <label class="excursions__field-name">
-                  Dziecko: <span class="excursions__price">${childPrice}</span>PLN x
+                  Child: <span class="excursions__price">${childPrice}</span>GB x
                   <input class="excursions__field-input" name="children" />
                 </label>
               </div>
               <div class="excursions__field excursions__field--submit">
                 <input
                   class="btn excursions__field-input excursions__field-input--submit"
-                  value="dodaj do zamówienia"
+                  value="add to my order"
                   type="submit"
                 />
               </div>
@@ -247,7 +247,6 @@ function orderTrips(e, manageAPI) {
     validateEmail(email, errors);
     if (errors.length > 0) {
         e.preventDefault();
-        console.log("Bledy w formularzu");
     } else {
         const orderData = createOrderedMsg(e, email);
         addOrderToDatabase(manageAPI, orderData);
@@ -277,7 +276,6 @@ async function addOrderToDatabase(manageAPI, orderData) {
             orderArr.push(item);
         });
         await manageAPI.addToAPI(ordersAPI, orderArr);
-        return;
     } catch (error) {
         console.log(`API not loaded: ${error}`);
     }
@@ -288,7 +286,7 @@ function validateString(input, arr) {
     const value = input.value;
     const label = input.parentElement;
     if (!value) {
-        input.placeholder = "Wpisz imie";
+        input.placeholder = "Name and Surname";
         label.style.color = "red";
         arr.push("error");
     } else if (!value.match(regex)) {
@@ -305,7 +303,7 @@ function validateEmail(input, arr) {
     const value = input.value;
     const label = input.parentElement;
     if (!value) {
-        input.placeholder = "Wpisz email";
+        input.placeholder = "Email";
         label.style.color = "red";
         arr.push("error");
     } else if (!value.match(regex)) {
@@ -323,7 +321,7 @@ function createOrderedMsg(e, email) {
             .innerText;
     const emailAddres = email.value;
     alert(
-        `Dziękujęmy za złożenie zamówienia o wartości ${finalPrice}. Wszelkie szczegóły zamówienia zostały wysłane na adres email: ${emailAddres}.`
+        `Thank you for your order. Your total price was ${finalPrice}. All details about your order were sent to email address: ${emailAddres}.`
     );
     return [finalPrice, emailAddres];
 }
@@ -358,7 +356,7 @@ function clearTotal(e) {
     const target = e.target;
     const totalDisplay =
         target.parentElement.parentElement.firstElementChild.firstElementChild;
-    totalDisplay.innerText = "0 PLN";
+    totalDisplay.innerText = "0 GB";
 }
 
 // Clear basket - data.json //

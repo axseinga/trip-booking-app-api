@@ -13,7 +13,7 @@
         <title>JavaScript: API oraz FETCH - admin, devmentor.pl</title>
     </head>
     <body>
-        <h1>Panel administratora</h1>
+        <h1>Admin panel</h1>
         <section class="panel">
             <ul class="panel__excursions excursions">
                 <!-- <li data-id="1" class="excursions__item excursions__item--prototype">
@@ -51,12 +51,12 @@
                 <form class="form" novalidate>
                     <div class="form__row">
                         <label class="form__label">
-                            Nazwa:<input class="form__field" name="name" />
+                            Title:<input class="form__field" name="name" />
                         </label>
                     </div>
                     <div class="form__row">
                         <label class="form__label">
-                            Opis:<textarea
+                            About:<textarea
                                 class="form__field form__field--longtext"
                                 name="description"
                             ></textarea>
@@ -64,7 +64,7 @@
                     </div>
                     <div class="form__row">
                         <label class="form__label">
-                            Cena dorosły:
+                            Adult price:
                             <input
                                 class="form__field"
                                 type="number"
@@ -74,7 +74,7 @@
                     </div>
                     <div class="form__row">
                         <label class="form__label">
-                            Cena dziecko:
+                            Child price:
                             <input
                                 class="form__field"
                                 type="number"
@@ -85,7 +85,7 @@
                     <div class="order__field order__field--submit">
                         <input
                             class="order__field-input order__field-submit"
-                            value="dodaj"
+                            value="add trip"
                             type="submit"
                         />
                     </div>

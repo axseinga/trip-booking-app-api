@@ -1,43 +1,27 @@
 {
-  "excursions": [
-    {
-      "title": "Karkonosze",
-      "description": "Wycieczka objazdowa. Przepiękne Karkonosze połączone z wyjazdem do Czech. Karkonosze to najwyższe pasmo górskie Sudetów i zarazem Czech rozciągające się na przestrzeni ok. 40 km (od Przełęczy Szklarskiej na zachodzie do Przełęczy Lubawskiej na wschodzie). \n\n",
-      "adultPrice": "400",
-      "childPrice": "250",
-      "id": 1
-    },
-    {
-      "title": "Bieszczady",
-      "description": "Wycieczka w Bieszczady. Wycieczka 3 dniowa. Po drodze zwiedzanie: Łańcut, Solina, Lesko, Komańcza. Bieszczady należą do Beskidów Wschodnich, będących najbardziej na zachód wysuniętą częścią Karpat Wschodnich. Leżą na południe od doliny Sanu i na wschód od doliny Osławy, pomiędzy przełęczami Łupkowską i Użocką.",
-      "adultPrice": "300",
-      "childPrice": "200",
-      "id": 2
-    },
-    {
-      "title": "Hel",
-      "description": "Półwysep Helski to jeden z najciekawszych rejonów polskiego wybrzeża Morza Bałtyckiego. W czasie wycieczki zwiedzą Państwo Hel – rybackie miateczko położone na krańcu 36 metrowego półwyspu, z jego największymi atrakcjami: fokarium oraz Muzeum Obrony Wybrzeża. Następnie udamy się na urokliwe molo w Juracie, a na końcu, na Przylądku Rozewie zwiedzimy najstarszą działającą latarnię morską w Polsce. Wycieczka 1 dniowa.",
-      "adultPrice": "150",
-      "childPrice": "80",
-      "id": 3
-    }
-  ],
-  "basket": [],
-  "orders": [
-    [
-      {
-        "totalPrice": "460 PLN",
-        "orderEmail": "email@email.io"
-      },
-      {
-        "title": "Hel",
-        "adultNumber": 2,
-        "adultPrice": 150,
-        "childNumber": 2,
-        "childPrice": 80,
-        "total": 460,
-        "id": 1
-      }
-    ]
-  ]
+    "excursions": [
+        {
+            "title": "Hel Peninsula",
+            "description": "Discover the end of Poland on a full-day sightseeing tour of the Hel Peninsula, a magnificent sandbar that juts out into the open Baltic Sea.\n\nThis Polish Land`s End is an enchanting environment of white sand beaches, traditional fishermen`s houses and cozy bars, where you will have an opportunity to sample some typical Kashubian specialties.",
+            "adultPrice": "200",
+            "childPrice": "120",
+            "id": 1
+        },
+        {
+            "title": "Bieszczady Mountains",
+            "description": "Bieszczady is a mountain range that runs from the extreme south-east of Poland and north-east of Slovakia through to western Ukraine. Enjoy nature at it's best. A week long trip.",
+            "adultPrice": "500",
+            "childPrice": "350",
+            "id": 2
+        },
+        {
+            "title": "Malbork Castle Tour",
+            "description": "Discover the Castle of the Teutonic Order in Malbork, one of the greatest monuments in Poland and a UNESCO World Heritage Site. Learn about the history of the Teutonic Order and explore one of the largest gothic castle in the world.",
+            "adultPrice": "80",
+            "childPrice": "50",
+            "id": 3
+        }
+    ],
+    "basket": [],
+    "orders": []
 }

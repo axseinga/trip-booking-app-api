@@ -95,7 +95,7 @@ ul {
     margin: 0 30px;
     width: 200px;
     padding: 20px;
-    height: 60vh;
+    height: min-content;
     border: 1px solid #bbb;
     border-radius: 5px;
     background-color: rgba(247, 249, 251, 0.7);

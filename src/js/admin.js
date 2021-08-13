@@ -116,8 +116,7 @@ function createSaveBtn() {
     // 02. create save button and disable add button
     const addBtn = document.querySelector(".order__field-submit");
     const saveBtn = addBtn.cloneNode();
-    saveBtn.value = "zapisz";
-    //addBtn.disabled = true;
+    saveBtn.value = "save";
     const parentBtns = addBtn.parentElement;
     parentBtns.appendChild(saveBtn);
 }
@@ -125,7 +124,7 @@ function createSaveBtn() {
 function createCancelBtn() {
     const addBtn = document.querySelector(".order__field-submit");
     const cancelBtn = addBtn.cloneNode();
-    cancelBtn.value = "anuluj";
+    cancelBtn.value = "cancel";
     addBtn.disabled = true;
     const parentBtns = addBtn.parentElement;
     parentBtns.appendChild(cancelBtn);
@@ -212,11 +211,10 @@ function getTripData() {
             childPrice: childPrice,
         };
     } else {
-        console.log("All tabs must contain data");
-        titleEl.placeholder = "Wpisz nazwe";
-        descriptionEl.placeholder = "Uzupelnij opis";
-        adultPriceEl.placeholder = "Dodaj cene";
-        childPriceEl.placeholder = "Dodaj cene";
+        titleEl.placeholder = "Add title";
+        descriptionEl.placeholder = "Add about";
+        adultPriceEl.placeholder = "Add price";
+        childPriceEl.placeholder = "Add price";
     }
 }
 
@@ -262,23 +260,23 @@ function createTripsMarkup(id, title, description, adultPrice, childPrice) {
         <form class="excursions__form">
             <div class="excursions__field">
                 <label class="excursions__field-name">
-                    Dorosły: <strong>${adultPrice} </strong>PLN
+                    Adult: <strong>${adultPrice} </strong>GB
                 </label>
             </div>
             <div class="excursions__field">
                 <label class="excursions__field-name">
-                    Dziecko: <strong>${childPrice} </strong>PLN
+                    Child: <strong>${childPrice} </strong>GB
                 </label>
             </div>
             <div class="excursions__field   excursions__field--submit">
                 <input 
                     class="excursions__field-input  excursions__field-input--update" 
-                    value="edytuj"
+                    value="edit"
                     type="submit"
                 />
                 <input 
                     class="excursions__field-input  excursions__field-input--remove" 
-                    value="usuń"
+                    value="delete"
                     type="submit"
                 />
             </div>
