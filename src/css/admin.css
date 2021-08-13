@@ -5,16 +5,7 @@
 }
 
 body {
-    height: 100vh;
-    background-image: linear-gradient(
-            to right bottom,
-            rgba(143, 193, 227, 0.6),
-            rgba(143, 193, 227, 0.6)
-        ),
-        url(../img/image.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    /* Photo by v2osk: "https://unsplash.com/@v2osk?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"  */
+    background-color: rgba(143, 193, 227);
     font-family: "Roboto", sans-serif;
 }
 
@@ -31,10 +22,8 @@ ul {
     display: flex;
     margin: 0 auto;
     max-width: 1200px;
-    max-height: 100vh;
     padding: 30px 0;
     align-items: flex-start;
-    overflow: scroll;
     justify-content: space-between;
 }
 
